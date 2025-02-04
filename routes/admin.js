@@ -1,7 +1,7 @@
 const { Router } = require('express');
+const {adminModel}=require('../db');
 adminRouter = Router();
 
-adminRouter.use(adminMiddleware);
 adminRouter.post("/signup", (req, res) => {
     res.json({
         msg: "signup endpoint"

@@ -15,6 +15,6 @@ userRouter.post("/purchases", (req, res) => {
         msg: "signin endpoint"
     })
 })
-module.exports={
-userRouter:userRouter
+module.exports = {
+    userRouter: userRouter
 }
