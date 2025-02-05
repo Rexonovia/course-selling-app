@@ -1,4 +1,5 @@
 const express=require('express');
+const mongoose=require('mongoose');
 const jwt=require('jsonwebtoken');
 const {userRouter}=require('./routes/user')
 const {courseRouter}=require('./routes/course')
@@ -8,5 +9,8 @@ app.use(express.json());
 app.use('/api/v1/user',userRouter)
 app.use('/api/v1/admin',adminRouter)
 app.use('/api/v1/course',courseRouter)
-
-app.listen(3000);
+ async function main(){
+    await mongoose.connect('mongodb+srv://vikasrautela88:MYEuNfQLzVzdXmf9@cluster0.tw6ue.mongodb.net/course-selling-app')
+    app.listen(3000);
+}
+main();

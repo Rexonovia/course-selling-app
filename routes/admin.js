@@ -3,6 +3,7 @@ const {adminModel}=require('../db');
 adminRouter = Router();
 
 adminRouter.post("/signup", (req, res) => {
+    
     res.json({
         msg: "signup endpoint"
     })
@@ -12,17 +13,17 @@ adminRouter.post("/signin", (req, res) => {
         msg: "signin endpoint"
     })
 })
-adminRouter.post("/course", (req, res) => {
+adminRouter.post("/", (req, res) => {
     res.json({
         msg: "signin endpoint"
     })
 })
-adminRouter.put("/course", (req, res) => {
+adminRouter.put("/", (req, res) => {
     res.json({
         msg: "signin endpoint"
     })
 })
-adminRouter.get("/course", (req, res) => {
+adminRouter.get("/bulk", (req, res) => {
     res.json({
         msg: "signin endpoint"
     })
