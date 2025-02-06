@@ -1,11 +1,11 @@
-const { Router } = require("express");
-const { z, late, ParseStatus } = require('zod');
+const { z } = require('zod');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
-const { userModel } = require('../db')
-const userRouter = Router()
-require("dotenv").config();
-const JWT_SECURE = process.env.USER_SECRET_KEY;
+const { userModel } = require('../db');
+const { JWT_USER_SECURE } = require('../config');
+const { Router } = require('express');
+const userRouter = Router();
+const JWT_SECURE = JWT_USER_SECURE;
 
 userRouter.post("/signup", async (req, res) => {
     const requireBody = z.object({
