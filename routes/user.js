@@ -62,8 +62,6 @@ userRouter.post("/signin", async (req, res) => {
     res.status(400).json({
         error: "Invalid email or password"
     })
-
-
 })
 userRouter.post("/purchases", (req, res) => {
     res.json({
