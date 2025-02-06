@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 require('dotenv').config();
 const { adminModel } = require('../db');
+const { adminMiddleware } = require('../middleware/admin');
 adminRouter = Router();
 const JWT_SECURE = process.env.ADMIN_SECRET_KEY
 
@@ -44,7 +45,7 @@ adminRouter.post("/signup", async (req, res) => {
         msg: "User created"
     })
 })
-adminRouter.post("/signin", async (req, res) => {
+adminRouter.post("/signin",async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
     const admin = await adminModel.findOne({
@@ -66,9 +67,19 @@ adminRouter.post("/signin", async (req, res) => {
         })
     }
 })
-adminRouter.post("/", (req, res) => {
+adminRouter.post("/", adminMiddleware ,async (req, res) => {
+    const adminId=req.adminId;
+    const {title,description,price,imageUrl}=req.body;
+    await courseModel.create({
+        title,
+        description,
+        price,
+        imageUrl,
+        creatorId:adminId
+    })
     res.json({
-        msg: "signin endpoint"
+        msg: " Course Created",
+        courseId:course._id
     })
 })
 adminRouter.put("/", (req, res) => {
