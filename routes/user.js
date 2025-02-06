@@ -4,7 +4,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const { userModel } = require('../db')
 const userRouter = Router()
-const JWT_SECURE = "secure"
+require("dotenv").config();
+const JWT_SECURE = process.env.USER_SECRET_KEY;
 
 userRouter.post("/signup", async (req, res) => {
     const requireBody = z.object({
@@ -50,12 +51,12 @@ userRouter.post("/signin", async (req, res) => {
     });
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (isPasswordValid && user) {
-        const token= jwt.sign({
-            userId:user._id.toString()
-        },JWT_SECURE)
+        const token = jwt.sign({
+            userId: user._id.toString()
+        }, JWT_SECURE)
         res.json({
-           token:token,
-           msg:"User logged in"
+            token: token,
+            msg: "User logged in"
         })
 
     }

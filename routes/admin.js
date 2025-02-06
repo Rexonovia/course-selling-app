@@ -2,9 +2,10 @@ const { Router } = require('express');
 const { z } = require('zod');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
-const {adminModel}=require('../db');
+require('dotenv').config();
+const { adminModel } = require('../db');
 adminRouter = Router();
-const JWT_SECURE = "adminSecure"
+const JWT_SECURE = process.env.ADMIN_SECRET_KEY
 
 
 adminRouter.post("/signup", async (req, res) => {
@@ -51,18 +52,19 @@ adminRouter.post("/signin", async (req, res) => {
     });
     const isPasswordValid = await bcrypt.compare(password, admin.password);
     if (isPasswordValid && admin) {
-        const token= jwt.sign({
-            adminId:admin._id.toString()
-        },JWT_SECURE)
+        const token = jwt.sign({
+            adminId: admin._id.toString()
+        }, JWT_SECURE)
         res.json({
-           token:token,
-           msg:"User logged in"
+            token: token,
+            msg: "User logged in"
         })
     }
-    else
-   { res.status(400).json({
-        error: "Invalid email or password"
-    })}
+    else {
+        res.status(400).json({
+            error: "Invalid email or password"
+        })
+    }
 })
 adminRouter.post("/", (req, res) => {
     res.json({
@@ -79,6 +81,6 @@ adminRouter.get("/bulk", (req, res) => {
         msg: "signin endpoint"
     })
 })
-module.exports={
-    adminRouter:adminRouter
+module.exports = {
+    adminRouter: adminRouter
 }
