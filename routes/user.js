@@ -1,7 +1,8 @@
 const { z } = require('zod');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
-const { userModel } = require('../db');
+const { userModel, purchaseModel } = require('../db');
+const { userMiddleware } = require('../middleware/user');
 const { JWT_USER_SECURE } = require('../config');
 const { Router } = require('express');
 const userRouter = Router();
@@ -64,9 +65,13 @@ userRouter.post("/signin", async (req, res) => {
         error: "Invalid email or password"
     })
 })
-userRouter.post("/purchases", (req, res) => {
+userRouter.get("/purchases",userMiddleware , async(req, res) => {
+    const userId=req.body.userId;
+    const purchases=await purchaseModel.find({
+        userId
+    })
     res.json({
-        msg: "signin endpoint"
+       purchases
     })
 })
 module.exports = {
