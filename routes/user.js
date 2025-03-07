@@ -1,6 +1,6 @@
 const { z } = require('zod');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 const { userModel, purchaseModel, courseModel } = require('../db');
 const { userMiddleware } = require('../middleware/user');
 const { JWT_USER_SECURE } = require('../config');
